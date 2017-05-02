@@ -6,7 +6,7 @@
   background-color: #2e353d;
   position: fixed;
   top: 0px;
-  width: 300px;
+  width: 200px;
   height: 100%;
   color: #e1ffff;
 }
@@ -139,7 +139,7 @@
     display: block;
   }
   #main {
-  	width:calc(100% - 300px);
+  	width:calc(100% - 200px);
   	float: right;
   }
 }
