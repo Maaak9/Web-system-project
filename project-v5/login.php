@@ -21,7 +21,6 @@
 </head>
     
 <?php
-  session_start();
   $message = '';
  include('db.php');
  if (isset($_POST['username']) and isset($_POST['password'])) {
@@ -38,7 +37,6 @@ END;
     $row = $result->fetch_object();
     $_SESSION["username"] = $row->username;
     $_SESSION["user_id"] = $row->user_id;
-    $_SESSION["super_user"] = $row->super_user;
     if($row->super_user == 1){
         $_SESSION['super_user'] = $row->super_user;
         echo "logged in as super user";

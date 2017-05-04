@@ -25,7 +25,7 @@ function typeOfIcon($value){
   return $returnValue;
  }
 
-require('db.php');
+require_once('db.php');
 $head = <<<END
 <html>
 <head>
@@ -66,9 +66,6 @@ $body = <<<END
   <div class="w3-container w3-row">
     <div class="w3-col s4">
     </div>
-    <div class="w3-col s8 w3-bar">
-      <span>Welcome, <strong></strong></span><br>
-    </div>
   </div>
   <div class="w3-container">
     <h5>Dashboard</h5>
@@ -76,6 +73,7 @@ $body = <<<END
   <div class="w3-bar-block">
       <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
       <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Overview</a>
+      <a href="logout.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw"></i>  Logout</a>
 END;
 $query = <<<END
 SELECT room_name, room_id, type_id FROM room_proj
@@ -88,6 +86,16 @@ if ($res->num_rows > 0) {
      <a href="#" class="w3-bar-item w3-button w3-padding"><i class="{$icon}"></i>  {$row->room_name}</a>
 SIDEBAR;
   }
+}
+if(isset($_SESSION['super_user'])){
+$body .= <<<SIDEBAR
+  <br>
+  <h5 class="w3-bar-item">Admin options</h5>
+  <a href="register.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Register new account</a>
+  <a href="register.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Add new room</a>
+  <a href="register.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Add new device</a>
+
+SIDEBAR;
 }
 
 $body .= <<<BODY
