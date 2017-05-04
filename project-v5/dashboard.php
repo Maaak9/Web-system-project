@@ -1,6 +1,34 @@
-<!DOCTYPE html>
+<?php
+
+function typeOfIcon($value){
+  $returnValue = "";
+  switch ($value){
+    case 1:
+       $returnValue = "fa fa-coffee fa-fw"; // Kitchen
+      break;
+    case 2:
+       $returnValue = "fa fa-users fa-fw"; // living room
+      break;
+    case 3: 
+       $returnValue = "fa fa-bed fa-fw"; // bedroom
+      break;
+    case 4:
+       $returnValue = "fa fa-briefcase fa-fw"; // hall
+      break;
+    case 5:
+       $returnValue = "fa fa fa-bath fa-fw"; // bathroom
+      break;  
+    default:
+       $returnValue = "fa-fw";
+       break; 
+  }
+  return $returnValue;
+ }
+
+require('db.php');
+$head = <<<END
 <html>
-<title>W3.CSS Template</title>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -8,6 +36,17 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="media/css/styles.css">
+<!-- Icons -->
+<link href="media/css/font-awesome.min.css" rel="stylesheet">
+<link href="media/css/simple-line-icons.css" rel="stylesheet">
+
+<!-- Main styles for this application -->
+<link href="media/css/style.css" rel="stylesheet">
+</head>
+END;
+
+$body = <<<END
+<body>
 <body class="w3-light-grey">
 
 <!-- Top container -->
@@ -28,39 +67,44 @@
     <div class="w3-col s4">
     </div>
     <div class="w3-col s8 w3-bar">
-      <span>Welcome, <strong>Mike</strong></span><br>
-      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
-      
-      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
-      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+      <span>Welcome, <strong></strong></span><br>
     </div>
   </div>
   <div class="w3-container">
     <h5>Dashboard</h5>
   </div>
   <div class="w3-bar-block">
-    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Overview</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-thermometer-half fa-fw"></i>  Housing temprature</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-thermometer-half fa-fw"></i>  Frezzer</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-thermometer-half fa-fw"></i>  Refrigerator</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-television fa-fw" aria-hidden="true"></i>  Television</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell-o fa-fw" aria-hidden="true"></i>  Alarm</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-volume-up fa-fw"></i>  Speakers</a><br><br>
-  </div>
+      <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+      <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Overview</a>
+END;
+$query = <<<END
+SELECT room_name, room_id, type_id FROM room_proj
+END;
+$res = $mysqli->query($query);
+if ($res->num_rows > 0) {
+ while ($row = $res->fetch_object()) {
+  $icon = typeOfIcon($row->type_id);
+  $body .= <<<SIDEBAR
+     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="{$icon}"></i>  {$row->room_name}</a>
+SIDEBAR;
+  }
+}
+
+$body .= <<<BODY
+</div>
 </nav>
-
-
-<!-- Overlay effect when opening sidebar on small screens -->
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px;margin-top:43px;">
+BODY;
 
+$end = <<<END
   <!-- End page content -->
 </div>
 
 <script src="./media/js/sidebar.js"></script>
-
 </body>
 </html>
+END;
+?>
