@@ -72,7 +72,7 @@ $body = <<<END
   </div>
   <div class="w3-bar-block">
       <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-      <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Overview</a>
+      <a href="index.php" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  All rooms</a>
       <a href="logout.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw"></i>  Logout</a>
 END;
 $query = <<<END
@@ -83,8 +83,20 @@ if ($res->num_rows > 0) {
  while ($row = $res->fetch_object()) {
   $icon = typeOfIcon($row->type_id);
   $body .= <<<SIDEBAR
-     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="{$icon}"></i>  {$row->room_name}</a>
+    <div class="w3-bar-item w3-button w3-padding">
+     <a href="#" style="color: black;"><i class="{$icon}"></i>  {$row->room_name}</a>
 SIDEBAR;
+  if(isset($_SESSION['super_user'])){
+    $body .=<<<SIDEBAR
+     <a href="remove_room.php?id={$row->room_id}" style="color: black; float: right;" onclick="return confirm('Are you sure? All devices linked to that room will be removed aswell')">X</a>
+     </div>
+SIDEBAR;
+  }
+  else{
+    $body .=<<<SIDEBAR
+     </div>
+SIDEBAR;
+  }
   }
 }
 if(isset($_SESSION['super_user'])){
@@ -92,8 +104,8 @@ $body .= <<<SIDEBAR
   <br>
   <h5 class="w3-bar-item">Admin options</h5>
   <a href="register.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Register new account</a>
-  <a href="register.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Add new room</a>
-  <a href="register.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Add new device</a>
+  <a href="newroom.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Add new room</a>
+  <a href="add_device.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Add new device</a>
 
 SIDEBAR;
 }

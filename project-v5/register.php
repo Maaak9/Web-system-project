@@ -9,6 +9,7 @@ $message = '';
  } else {
      header("Location: index.php");
  }
+
 //Userregistration
  if(!empty($_POST['username']) && !empty($_POST['password'])):
 	
@@ -121,7 +122,7 @@ echo $body;
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <button name="back" onclick="location.href='index.php';" class="btn btn-primary px-4">Go back</button>
+                                        <button name="back" onclick="location.href='index.php';" class="btn btn-danger px-4">Go back</button>
                                     </div>
                                     <div class="col-6 text-right">
                                         <button type="submit" name="register" value="register" class="btn btn-primary px-4">Register</button>
