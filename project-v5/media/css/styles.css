@@ -8,9 +8,23 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 }
 
 #menubar{
-    text-align: center;
+text-align: center;
 position: relative;
 float: left;
 top: 50%;
 transform: translate(-50%, -50%);
+}
+
+.wrapper{
+    overflow:hidden; /*make sure the wrapper has no dimension*/
+    background:red;
+    margin-bottom:10px;
+}
+
+.item{
+    float:left; 
+    width:100px;
+    height:100px;
+    background:blue;
+    margin:10px;
 }

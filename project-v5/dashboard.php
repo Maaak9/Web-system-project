@@ -88,7 +88,7 @@ if ($res->num_rows > 0) {
 SIDEBAR;
   if(isset($_SESSION['super_user'])){
     $body .=<<<SIDEBAR
-     <a href="remove_room.php?id={$row->room_id}" style="color: black; float: right;" onclick="return confirm('Are you sure? All devices linked to that room will be removed aswell')">X</a>
+     <a href="remove_room.php?id={$row->room_id}" style="color: red; float: right;" onclick="return confirm('Are you sure? All devices linked to that room will be removed aswell')">X</a>
      </div>
 SIDEBAR;
   }
