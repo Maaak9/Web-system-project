@@ -49,8 +49,10 @@ $indexContent = <<<END
 END;
 $query = <<<END
 SELECT devices_proj.device_id, devices_proj.room_id, room_proj.room_name, devices_proj.type_id, devices_proj.description
-FROM devices_proj INNER JOIN room_proj ON devices_proj.room_id=room_proj.room_id
-INNER JOIN room_type_proj ON room_proj.type_id=room_type_proj.room_type_id;
+FROM devices_proj
+INNER JOIN room_proj ON devices_proj.room_id=room_proj.room_id
+INNER JOIN room_type_proj ON room_proj.type_id=room_type_proj.room_type_id
+WHERE devices_proj.room_id = '{$_GET['id']}';
 END;
 $res = $mysqli->query($query);
 if ($res->num_rows > 0) {
@@ -60,7 +62,7 @@ if ($res->num_rows > 0) {
 <div class="w3-third w3-container">
   <div class="w3-card-4" style="margin-top: 25px; background: white;">
     <div style="text-align: center;"><h6 style="">{$row->room_name}</h6></div>
-    <a href="device_details.php?id={$row->device_id}&room_id={$row->room_id}"><img src="{$img}" style="margin-left: 5%; width: 90%;"></a>
+    <img src="{$img}" style="margin-left: 5%; width: 90%;">
     <div class="w3-container w3-center">
       <div class="w3-container w3-center row" style="height: 35px">
         <div class="row" style="height: inherit; margin-top: 10px;">
