@@ -62,7 +62,7 @@ if ($res->num_rows > 0) {
 <div class="w3-third w3-container">
   <div class="w3-card-4" style="margin-top: 25px; background: white;">
     <div style="text-align: center;"><h6 style="">{$row->room_name}</h6></div>
-    <img src="{$img}" style="margin-left: 5%; width: 90%;">
+    <a href="device_details.php?id={$row->device_id}&room_id={$row->room_id}"><img src="{$img}" style="margin-left: 5%; width: 90%;"></a>
     <div class="w3-container w3-center">
       <div class="w3-container w3-center row" style="height: 35px">
         <div class="row" style="height: inherit; margin-top: 10px;">

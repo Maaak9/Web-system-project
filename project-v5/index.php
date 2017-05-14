@@ -55,12 +55,28 @@ END;
 $res = $mysqli->query($query);
 if ($res->num_rows > 0) {
  while ($row = $res->fetch_object()) {
+   $test2 = <<<END
+SELECT * FROM device_status_proj WHERE device_id = {$row->device_id}
+END;
+    //check on/off
+    $on_off = " ";
+    $result = $mysqli->query($test2);
+    if ($result->num_rows > 0) {
+      while ($test = $result->fetch_object()) {
+          if($test->on_off == 1){
+              $on_off = "checked";
+          }
+          else{
+              $on_off = "lelele ";
+          }
+      }
+    } 
   $img = typeOfImage($row->type_id);
   $indexContent .= <<<CONTENT
 <div class="w3-third w3-container">
   <div class="w3-card-4" style="margin-top: 25px; background: white;">
     <div style="text-align: center;"><h6 style="">{$row->room_name}</h6></div>
-    <a href="device_details.php?id={$row->device_id}&room_id={$row->room_id}"><img src="{$img}" style="margin-left: 5%; width: 90%;"></a>
+    <a href="device_details.php?id={$row->device_id}&room_id={$row->room_id}&des={$row->description}"><img src="{$img}" style="margin-left: 5%; width: 90%;"></a>
     <div class="w3-container w3-center">
       <div class="w3-container w3-center row" style="height: 35px">
         <div class="row" style="height: inherit; margin-top: 10px;">
