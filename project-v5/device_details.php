@@ -210,7 +210,6 @@ $tempContent = <<<CONTENT
         </form>  
       <div class="w3-container w3-center row" style="height: 35px">
         <div class="row" style="height: inherit; margin-top: 10px;">
-        <h6 style="margin-left:10px; font-family: 'Raleway', sans-serif;">|  Frezzer, refrigerator, temp  |</h6>
         </div>
       </div>
     </div>
@@ -240,12 +239,6 @@ global $on_off;
 
 global $message;
 
-$query = <<<END
-SELECT on_off FROM devices_proj_status
-WHERE device_id = '{$_GET['id']}'
-END;
-
-
 $tempContent = <<<CONTENT
 <div class="w3-rest w3-container" style="">
     <h3 style="font-size=30; margin-top: 15px; text-align: center;">{$_GET['des']}</h3> 
@@ -267,7 +260,7 @@ $tempContent = <<<CONTENT
             </label>
             <div class="row">
                 <div class="col-6">
-                    <button name="back" onclick="location.href='index.php';" class="btn btn-danger px-4">Go back</button>
+                    <button name="test" onclick="location.href=index.php;" class="btn btn-danger px-4">Go back</button>
                 </div>
                 <div class="col-6">
                     <button type="submit" name="update" value="update" class="btn btn-primary px-4">Update</button>
@@ -276,7 +269,6 @@ $tempContent = <<<CONTENT
         </form>  
       <div class="w3-container w3-center row" style="height: 35px">
         <div class="row" style="height: inherit; margin-top: 10px;">
-        <h6 style="margin-left:10px; font-family: 'Raleway', sans-serif;">|  Frezzer, refrigerator, temp  |</h6>
         </div>
       </div>
     </div>
@@ -470,7 +462,6 @@ $tempContent = <<<CONTENT
       </form>  
       <div class="w3-container w3-center row" style="height: 35px">
         <div class="row" style="height: inherit; margin-top: 10px;">
-        <h6 style="margin-left:10px; font-family: 'Raleway', sans-serif;">|  Tv  |</h6>
         </div>
       </div>
     </div>

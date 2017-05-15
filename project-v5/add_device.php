@@ -51,7 +51,7 @@ echo $body;
                             <form action="add_device.php" method="post">
                                 <p class="text-muted"></p>
                                 <div class="input-group mb-3">
-                                    <span class="input-group-addon"><i class="fa fa-user-plus"></i>
+                                    <span class="input-group-addon"><i class="fa fa-life-ring"></i>
                                     </span>
                                     <select class="form-control" name="device_typ" placeholder="Device type" required>
                                     <option value="1" selected disabled>Type of device</option>
@@ -64,7 +64,7 @@ echo $body;
                                     </select>
                                 </div>
                                 <div class="input-group mb-3">
-                                    <span class="input-group-addon"><i class="fa fa-user-plus"></i>
+                                    <span class="input-group-addon"><i class="fa fa-trello"></i>
                                     </span>
                                     <select class="form-control" name="room_id" placeholder="Select room" required>
                                     <option value="0" selected disabled>Choose a room</option>
@@ -85,7 +85,7 @@ echo $options
                                     </select>
                                 </div>
                                 <div class="input-group mb-3">
-                                    <span class="input-group-addon"><i class="icon-user"></i>
+                                    <span class="input-group-addon"><i class="fa fa-comment-o"></i>
                                     </span>
                                     <input type="text" name="description" class="form-control" placeholder="Description" required>
                                 </div>

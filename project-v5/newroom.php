@@ -47,12 +47,12 @@ echo $body;
                             <form action="newroom.php" method="post">
                                 <p class="text-muted"></p>
                                 <div class="input-group mb-3">
-                                    <span class="input-group-addon"><i class="icon-user"></i>
+                                    <span class="input-group-addon"><i class="fa fa-trello"></i>
                                     </span>
                                     <input type="text" name="room_name" class="form-control" placeholder="Room name" required>
                                 </div>
                                 <div class="input-group mb-3">
-                                    <span class="input-group-addon"><i class="fa fa-user-plus"></i>
+                                    <span class="input-group-addon"><i class="fa fa-slack"></i>
                                     </span>
                                     <select class="form-control" name="room_id" placeholder="Room type" required>
                                     <option value="1" selected disabled>Kitchen</option>
