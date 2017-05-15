@@ -100,7 +100,8 @@ if ($res->num_rows > 0) {
     <div class="w3-bar-item w3-button w3-padding {$currentRoom}">
      <a href="filter_room.php?id={$row->room_id}" style="color: black;"><i class="{$icon}"></i>  {$row->room_name}</a>
 SIDEBAR;
-  if(isset($_SESSION['super_user'])){
+ //if super user add remove button for rooms
+  if(isset($_SESSION['super_user'])){ 
     $body .=<<<SIDEBAR
      <a href="remove_room.php?id={$row->room_id}" style="color: red; float: right;" onclick="return confirm('Are you sure? All devices linked to that room will be removed aswell')">X</a>
      </div>
@@ -113,6 +114,7 @@ SIDEBAR;
   }
   }
 }
+//if superuser add superuser menu
 if(isset($_SESSION['super_user'])){
 $body .= <<<SIDEBAR
   <br>

@@ -14,7 +14,8 @@ if(!isset($_GET['id']) && !isset($_GET['room_id'])){
 }
 
 
-//check contet of form
+//check contet of form if frezzer/ refrigeragor / ac have been updated
+// if true query the db with new values
  if(!empty($_POST['temprature'])):
     if(!empty($_POST['checkbox'])){
         $ONOFF = 1;
@@ -38,7 +39,7 @@ END;
 endif;
 
 if(!empty($_GET['type'])){
-    //check contet of form
+    //check contet of form Lamp
     if($_GET['type'] == 1):
         if(!empty($_POST['checkbox'])){
             $ONOFF = 1;
@@ -60,7 +61,7 @@ END;
         endif;    
     endif;
 
-    //check contet of form
+    //check contet of form TV
     if($_GET['type'] == 2):
         if(!empty($_POST['checkbox'])){
             $ONOFF = 1;
@@ -75,6 +76,30 @@ END;
         $query = <<<END
         INSERT INTO device_status_proj(	device_id, precentage, channel, on_off, time_stamp)
         VALUES('{$device_id}' , '{$volume}' , '{$channel}' , '{$ONOFF}' , '{$created_at}')
+END;
+        $result = $conn->prepare($query);
+        if ( $result->execute() ):
+            $message = 'Success! Updated';
+        else:
+            $message = 'Sorry there must have been an issue updating your device';
+        endif;    
+    endif;
+
+    
+    //check contet of form
+    if($_GET['type'] == 3):
+        if(!empty($_POST['checkbox'])){
+            $ONOFF = 1;
+        }
+        else {
+            $ONOFF = 0;
+        }
+        $volume = $_POST['volume'];
+        $device_id = $_GET['id'];
+        $created_at = date('Y-m-d H:i:s');
+        $query = <<<END
+        INSERT INTO device_status_proj(	device_id, precentage, on_off, time_stamp)
+        VALUES('{$device_id}' , '{$volume}' , '{$ONOFF}' , '{$created_at}')
 END;
         $result = $conn->prepare($query);
         if ( $result->execute() ):
@@ -409,16 +434,43 @@ return $tempContent;
 }
 
 function speaker(){
+global $on_off;
+global $mysqli;
 $tempContent = <<<CONTENT
+<div class="w3-rest w3-container" style="">
+    <h3 style="font-size=30; margin-top: 15px; text-align: center;">{$_GET['des']}</h3> 
+</div>
 <div class="w3-half w3-container">
   <div class="w3-card-4" style="margin-top: 25px; background: white;">
     <hr>
     <div style="text-align: center;"><h3 style="">Insert data</h3></div>
     <hr>
     <div class="w3-container w3-center">
+    <form action="device_details.php?id={$_GET['id']}&room_id={$_GET['room_id']}&type=3&des={$_GET['des']}" method="post">
+        <p class="text-muted">Update Speaker</p>
+        <br>
+        <p class="text-muted">Switch off/on</p>
+        <!-- Rounded switch -->
+        <label class="switch">
+        <input type="checkbox" name="checkbox" {$on_off}>
+        <div class="slider round"></div>
+        </label>
+        <br>
+        <label for="fader">Volume</label>
+        <input name="volume" type="range" min="0" max="100" value="50" id="fader" required>
+        <br>
+        <div class="row">
+            <div class="col-6">
+                <button name="back" onclick="location.href='index.php';" class="btn btn-danger px-4">Go back</button>
+            </div>
+            <div class="col-6">
+                <button type="submit" name="update" value="update" class="btn btn-primary px-4">Update</button>
+            </div>
+        </div>
+      </form>  
       <div class="w3-container w3-center row" style="height: 35px">
         <div class="row" style="height: inherit; margin-top: 10px;">
-        <h6 style="margin-left:10px; font-family: 'Raleway', sans-serif;">|  Speaker  |</h6>
+        <h6 style="margin-left:10px; font-family: 'Raleway', sans-serif;">|  Tv  |</h6>
         </div>
       </div>
     </div>
@@ -426,15 +478,40 @@ $tempContent = <<<CONTENT
 </div>
 
 <div class="w3-half w3-container">
-  <div class="w3-card-4" style="margin-top: 25px; background: white;">
+  <div class="w3-card-4" style="margin-top: 25px; background: white; height: 500;">
     <hr>
-    <div style="text-align: center;"><h3 style="margin-t">Graphical history</h3></div>
+    <div style="text-align: center;"><h3 style="">History</h3></div>
     <hr>
     <div class="w3-container w3-center">
-      <div class="w3-container w3-center row" style="height: 35px">
-        <div class="row" style="height: inherit; margin-top: 10px;">
-        <h6 id="raleway-font" style="margin-left:10px; font-family: 'Raleway', sans-serif;">|  hejehej  |</h6>
-        </div>
+      <div class="w3-container w3-center" style="height: 35px; text-align: center;">
+CONTENT;
+        $query = <<<END
+        SELECT * FROM device_status_proj
+        WHERE device_id IN ('{$_GET['id']}')
+        ORDER BY device_status_id DESC;
+END;
+        // get history of the last 10 toggles of the lamp
+        $counter = 0;
+        $res = $mysqli->query($query);
+        if ($res->num_rows > 0) {
+        while ($row = $res->fetch_object()) {
+            $counter = $counter+1;
+            if($counter > 10){
+                break;
+            }
+            if($row->on_off == 1){
+                $onoff = "ON";
+            }
+            else{
+                $onoff = "OFF";
+            }
+        $tempContent .= <<<CONTENT
+        <h6 style="margin-left:10px; font-family: 'Raleway', sans-serif;">Status : {$onoff} | Volume : {$row->precentage}% | {$row->time_stamp}</h6>
+        <br>
+CONTENT;
+            }
+        }
+        $tempContent .= <<<CONTENT
       </div>
     </div>
   </div>
